@@ -51,7 +51,7 @@ CREATE TABLE "ecommerce"."products" (
   "name" varchar,
   "price" int,
   "status" ecommerce.products_status,
-  "created_at" datetime DEFAULT (now())
+  "created_at" timestamptz
 );
 
 CREATE TABLE "ecommerce"."users" (
