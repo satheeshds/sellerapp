@@ -1,0 +1,6 @@
+go 1.18
+
+use (
+	./cmd/order_processor
+	./pkg/common
+)

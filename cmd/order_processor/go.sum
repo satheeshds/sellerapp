@@ -1,0 +1,4 @@
+github.com/gorilla/mux v1.8.0 h1:i40aqfkR1h2SlN9hojwV5ZA91wcXFOvkdNIeFDP5koI=
+github.com/gorilla/mux v1.8.0/go.mod h1:DVbg23sWSpFRCP0SfiEN6jmj59UnW/n46BH5rLB71So=
+github.com/satheeshds/sellerapp/pkg/common v0.0.0-20230114154832-3a4120d696b2 h1:0qREs3NWGsuLuOcVdhSDzhPpE1eQgpcec448aVHEkSk=
+github.com/satheeshds/sellerapp/pkg/common v0.0.0-20230114154832-3a4120d696b2/go.mod h1:Zb6sNMzDSIXDUzZgORPAIDwFgJ1Owrq8aOA6AB+aVfM=
