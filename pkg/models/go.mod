@@ -1,3 +1,3 @@
-module github.com/satheeshds/pkg/models
+module github.com/satheeshds/sellerapp/pkg/models
 
 go 1.18
