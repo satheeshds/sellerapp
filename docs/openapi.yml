@@ -1,0 +1,191 @@
+openapi: '3.0.2'
+info:
+  title: Seller App
+  version: '1.0'
+servers:
+  - url: http://localhost:5000/v1
+paths:
+  /order/{id}:
+    get:
+      summary: get an order based on id
+      operationId: getOrder
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        404:
+          description: NotFound
+    patch:
+      summary: cancels the specified order
+      operationId: cancelOrder
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderState'
+      responses:
+        204:
+          description: NoContent
+        404:
+          description: NotFound
+        409:
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+  /order:
+    post:
+      summary: creates a new order
+      operationId: createOrder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/Order'
+      responses:
+        201:
+          description: Created
+        400:
+          description: Bad Request
+
+  /inventory/{id}:
+    patch:
+      summary: blocks the number of products to be blocked
+      operationId: blocksInventory
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductQuantity'
+      responses:
+        204:
+          description: NoContent
+        404:
+          description: NotFound
+        409:
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+  
+  /payment:
+    post:
+      summary: creates a payment transaction for order
+      operationId: createPayment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentRequest'
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/PaymentResponse'
+        400:
+          description: Bad Request
+
+  /payment/{id}:
+    patch:
+      summary: refunds the cancelled orders
+      operationId: refund
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer    
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentRefund'
+
+      responses:
+        204:
+          description: NoContent
+        404:
+          description: NotFound
+        409:
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+components:
+  schemas:
+    Order:
+      type: object
+      properties:
+        id:
+          type: integer
+  
+    ProductQuantity:
+      type: object
+      properties:
+        count:
+          type: integer
+  
+    ErrorMessage:
+      type: object
+      properties:
+        message:
+          type: string
+    
+    PaymentRequest:
+      type: object
+      properties:
+        orderId: 
+          type: integer
+        totalAmount:
+          type: number
+    
+    PaymentResponse:
+      type: object
+      properties:
+        paymentId:
+          type: integer
+    
+    PaymentRefund:
+      type: object
+      properties:
+        orderId:
+          type: integer
+        totalAmount:
+          type: number  
+  
+    OrderState:
+      type: object
+      properties:
+        status:
+          type: integer
