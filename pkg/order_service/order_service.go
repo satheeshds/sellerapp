@@ -5,8 +5,10 @@ import "github.com/satheeshds/sellerapp/pkg/models"
 type OrderService struct {
 }
 
-func (o *OrderService) GetOrder(id int) (models.Order, error) {
-	return models.Order{}, nil
+func (o *OrderService) GetOrder(id int) (*models.Order, error) {
+	return &models.Order{
+		Id: int32(id),
+	}, nil
 }
 
 func (o *OrderService) CreateOrder(order models.Order) error {
