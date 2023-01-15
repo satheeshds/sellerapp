@@ -149,6 +149,14 @@ components:
       properties:
         id:
           type: integer
+        user_id:
+          type: integer
+        transaction_id:
+          type: integer
+        status:
+          type: string
+        created_at:
+          type: string
   
     ProductQuantity:
       type: object

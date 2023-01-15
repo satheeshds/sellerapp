@@ -15,6 +15,10 @@ func main() {
 	log.Printf("Server starting!")
 
 	orderRepository := &orderrepository.OrderRepository{}
+	err := orderRepository.Open()
+	if err != nil {
+		log.Fatalf("Unable to open database connection: %v", err)
+	}
 	defer orderRepository.Close()
 
 	orderService := orderservice.OrderService{

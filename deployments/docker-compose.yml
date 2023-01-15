@@ -8,9 +8,12 @@ services:
       POSTGRES_USER: "user"
       POSTGRES_PASSWORD: "password"
       POSTGRES_DB: "database"
+  
   order_processor:
     build: 
       context: ../cmd/order_processor
       dockerfile: ../../build/package/order_processor/Dockerfile
     ports:
       - "5000:5000"
+    depends_on:
+      - db

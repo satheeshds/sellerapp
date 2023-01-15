@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/satheeshds/sellerapp/pkg/models"
 )
 
@@ -15,7 +16,7 @@ func (o *OrderRepository) Open() error {
 	log.Printf("establishing db connection")
 	var err error
 	// Ideally configuration should be in config
-	o.db, err = gorm.Open("postgres", "user=user password=password dbname=database sslmode=disable")
+	o.db, err = gorm.Open("postgres", "user=user password=password host=db dbname=database sslmode=disable")
 	if err != nil {
 		log.Fatal(err)
 	}
