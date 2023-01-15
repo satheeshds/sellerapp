@@ -26,6 +26,7 @@ CREATE TYPE "order_status" AS ENUM (
 
 CREATE TABLE "transactions" (
   "id" int PRIMARY KEY,
+  "total_amount" decimal,
   "payment_method" payment_method,
   "status" payment_status,
   "created_at" timestamptz DEFAULT 'now()'
@@ -36,7 +37,7 @@ CREATE TABLE "orders" (
   "user_id" int,
   "transaction_id" int,
   "status" order_status,
-  "created_at" varchar
+  "created_at" timestamptz
 );
 
 CREATE TABLE "order_items" (
@@ -48,9 +49,10 @@ CREATE TABLE "order_items" (
 CREATE TABLE "products" (
   "id" int PRIMARY KEY,
   "name" varchar,
-  "price" int,
+  "price" decimal,
   "status" products_status,
-  "created_at" timestamptz
+  "created_at" timestamptz,
+  "quantity" int
 );
 
 CREATE TABLE "users" (
