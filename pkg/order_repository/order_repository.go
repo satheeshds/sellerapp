@@ -22,6 +22,8 @@ func (o *OrderRepository) Open() error {
 		log.Fatal(err)
 	}
 
+	o.db.Table("ecommerce.orders")
+
 	return nil
 }
 
