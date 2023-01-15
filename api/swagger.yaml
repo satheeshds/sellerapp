@@ -5,6 +5,23 @@ info:
 servers:
   - url: http://localhost:5000/v1
 paths:
+  /order:
+    post:
+      summary: creates a new order
+      operationId: createOrder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/Order'
+      responses:
+        201:
+          description: Created
+        400:
+          description: Bad Request
+
+
   /order/{id}:
     get:
       summary: get an order based on id
@@ -50,22 +67,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
-  /order:
-    post:
-      summary: creates a new order
-      operationId: createOrder
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema: 
-              $ref: '#/components/schemas/Order'
-      responses:
-        201:
-          description: Created
-        400:
-          description: Bad Request
-
   /inventory/{id}:
     patch:
       summary: blocks the number of products to be blocked

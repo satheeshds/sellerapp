@@ -17,8 +17,8 @@ services:
   
   order_processor:
     build: 
-      context: ../cmd/order_processor
-      dockerfile: ../../build/package/order_processor/Dockerfile
+      context: ../.
+      dockerfile: ./build/package/order_processor/Dockerfile
     ports:
       - "5000:5000"
     depends_on:

@@ -1,7 +1,8 @@
 FROM golang:1.18 AS build
 WORKDIR /go/src
 #COPY go ./go
-COPY . .
+COPY ./cmd/order_processor .
+COPY ./pkg ./pkg
 
 ENV CGO_ENABLED=0
 RUN go get -d -v ./...

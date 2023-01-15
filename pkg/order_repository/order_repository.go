@@ -16,13 +16,11 @@ func (o *OrderRepository) Open() error {
 	log.Printf("establishing db connection")
 	var err error
 	// Ideally configuration should be in config
-	log.Printf("latest host")
+	log.Printf("latest host no gorm.model")
 	o.db, err = gorm.Open("postgres", "user=user password=password host=db dbname=database sslmode=disable")
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	o.db.Table("ecommerce.orders")
 
 	return nil
 }
@@ -45,7 +43,7 @@ func (o *OrderRepository) Read(id int) (models.Order, error) {
 }
 
 func (o *OrderRepository) Update(id int, order models.Order) error {
-	o.db.Model(&order).Update(order)
+	o.db.Table("orders").Model(&order).Update(order)
 
 	return nil
 }
@@ -55,6 +53,6 @@ func (o *OrderRepository) Delete(id int) error {
 	if err != nil {
 		return err
 	}
-	o.db.Delete(&order)
+	o.db.Table("orders").Model(&order).Delete(&order)
 	return nil
 }
