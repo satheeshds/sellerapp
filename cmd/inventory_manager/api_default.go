@@ -24,7 +24,13 @@ func (i *inventoryapi) BlockInventory(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(err.Error()))
 		return
 	}
-	i.inventoryService.BlockInventory(inventory)
+	err = i.inventoryService.BlockInventory(inventory)
+	if err != nil {
+		log.Printf("error : %v", err)
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(err.Error()))
+		return
+	}
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)

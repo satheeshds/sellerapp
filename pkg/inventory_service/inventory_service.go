@@ -10,13 +10,13 @@ type InventoryService struct {
 }
 
 func (i *InventoryService) CreateInventory(inventory models.Inventory) error {
-	return nil
+	return i.Repository.Create(inventory)
 }
 
 func (i *InventoryService) BlockInventory(inventory models.Inventory) error {
-	return nil
+	return i.Repository.Update(inventory)
 }
 
 func (i *InventoryService) GetInventory(pid int) (models.Inventory, error) {
-	return models.Inventory{}, nil
+	return i.Repository.Read(pid)
 }

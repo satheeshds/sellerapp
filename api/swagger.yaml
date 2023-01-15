@@ -23,8 +23,6 @@ paths:
           description: Created
         400:
           description: Bad Request
-
-
   /order/{id}:
     get:
       summary: get an order based on id
@@ -175,6 +173,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
+
 components:
   schemas:
     Order:
@@ -226,7 +225,7 @@ components:
           type: integer
           minimum: 0
   
-     ErrorMessage:
+    ErrorMessage:
       type: object
       properties:
         message:

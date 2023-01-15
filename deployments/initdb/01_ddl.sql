@@ -37,7 +37,8 @@ CREATE TABLE "orders" (
   "user_id" int,
   "transaction_id" int,
   "status" order_status,
-  "created_at" timestamptz
+  "created_at" timestamptz DEFAULT 'now()',
+  "total_amount" decimal
 );
 
 CREATE TABLE "order_items" (
@@ -52,7 +53,7 @@ CREATE TABLE "products" (
   "price" decimal,
   "status" products_status,
   "created_at" timestamptz,
-  "quantity" int
+  "quantity" int not null check (quantity >= 0)
 );
 
 CREATE TABLE "users" (
