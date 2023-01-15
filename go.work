@@ -3,6 +3,8 @@ go 1.18
 use (
 	./cmd/order_processor
 	./pkg/common
+	./pkg/inventory_repository
+	./pkg/inventory_service
 	./pkg/models
 	./pkg/order_repository
 	./pkg/order_service

@@ -14,7 +14,16 @@ services:
       timeout: 5s
       retries: 5
       start_period: 10s
-  
+  inventory_manager:
+    build: 
+      context: ../.
+      dockerfile: ./build/package/inventory_manager/Dockerfile
+    ports:
+      - "5001:5001"
+    depends_on:
+      db:
+        condition: service_healthy
+
   order_processor:
     build: 
       context: ../.

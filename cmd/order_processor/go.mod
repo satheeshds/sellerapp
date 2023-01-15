@@ -16,10 +16,10 @@ require (
 	github.com/lib/pq v1.1.1 // indirect
 )
 
-replace github.com/satheeshds/sellerapp/pkg/common v0.0.0 => ./pkg/common
+replace github.com/satheeshds/sellerapp/pkg/common v0.0.0 => ../../pkg/common
 
-replace github.com/satheeshds/sellerapp/pkg/models v0.0.0 => ./pkg/models
+replace github.com/satheeshds/sellerapp/pkg/models v0.0.0 => ../../pkg/models
 
-replace github.com/satheeshds/sellerapp/pkg/order_repository v0.0.0 => ./pkg/order_repository
+replace github.com/satheeshds/sellerapp/pkg/order_repository v0.0.0 => ../../pkg/order_repository
 
-replace github.com/satheeshds/sellerapp/pkg/order_service v0.0.0 => ./pkg/order_service
+replace github.com/satheeshds/sellerapp/pkg/order_service v0.0.0 => ../../pkg/order_service

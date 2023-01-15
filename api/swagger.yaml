@@ -3,14 +3,9 @@ info:
   title: Seller App
   version: '1.0'
 servers:
-  - url: http://localhost:{port}/v1
-    variables:
-      environment:
-        default: 5000
-        enum:
-          - 5000
-          - 5001
-          - 5002
+  - url: http://localhost:5000/v1
+  - url: http://localhost:5001/v1
+  - url: http://localhost:5002/v1
   
 paths:
   /order:
@@ -83,10 +78,28 @@ paths:
         required: true
         content:
           application/json:
-            schemas:
+            schema:
               $ref: '#/components/schemas/Product'
 
   /inventory/{id}:
+    get:
+      summary: get the inventory info
+      operationId: readInventory
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer 
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        404:
+          description: NotFound
     patch:
       summary: blocks the number of products to be blocked
       operationId: blocksInventory
@@ -101,7 +114,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ProductQuantity'
+              $ref: '#/components/schemas/Product'
       responses:
         204:
           description: NoContent
@@ -213,18 +226,7 @@ components:
           type: integer
           minimum: 0
   
-    ProductQuantity:
-      type: object
-      properties:
-        count:
-          type: integer
-          minimum: 1
-        product_id:
-          type: integer
-          minimum: 1
-
-  
-    ErrorMessage:
+     ErrorMessage:
       type: object
       properties:
         message:
