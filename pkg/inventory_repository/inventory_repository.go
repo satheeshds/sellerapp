@@ -39,7 +39,7 @@ func (i *InventoryRepository) Open() error {
 		log.Fatal(err)
 	}
 
-	return nil
+	return err
 }
 
 func (i *InventoryRepository) Close() {

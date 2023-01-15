@@ -22,7 +22,7 @@ func (o *OrderRepository) Open() error {
 		log.Fatal(err)
 	}
 
-	return nil
+	return err
 }
 
 func (o *OrderRepository) Close() {
@@ -30,22 +30,22 @@ func (o *OrderRepository) Close() {
 }
 
 func (o *OrderRepository) Create(order models.Order) error {
-	o.db.Create(&order)
+	result := o.db.Create(&order)
 
-	return nil
+	return result.Error
 }
 
 func (o *OrderRepository) Read(id int) (models.Order, error) {
 	var order models.Order
-	o.db.First(&order, id)
+	result := o.db.First(&order, id)
 
-	return order, nil
+	return order, result.Error
 }
 
 func (o *OrderRepository) Update(id int, order models.Order) error {
-	o.db.Table("orders").Model(&order).Update(order)
+	result := o.db.Table("orders").Model(&order).Update(order)
 
-	return nil
+	return result.Error
 }
 
 func (o *OrderRepository) Delete(id int) error {
@@ -53,6 +53,6 @@ func (o *OrderRepository) Delete(id int) error {
 	if err != nil {
 		return err
 	}
-	o.db.Table("orders").Model(&order).Delete(&order)
-	return nil
+	result := o.db.Table("orders").Model(&order).Delete(&order)
+	return result.Error
 }
