@@ -6,14 +6,23 @@ import (
 	"strings"
 
 	"github.com/satheeshds/sellerapp/pkg/common"
+	orderrepository "github.com/satheeshds/sellerapp/pkg/order_repository"
 	orderservice "github.com/satheeshds/sellerapp/pkg/order_service"
 )
 
 func main() {
-	log.Printf("Server started!")
+
+	log.Printf("Server starting!")
+
+	orderRepository := &orderrepository.OrderRepository{}
+	defer orderRepository.Close()
+
+	orderService := orderservice.OrderService{
+		Repository: orderRepository,
+	}
 
 	orderapi := &orderapi{
-		orderService: &orderservice.OrderService{},
+		orderService: &orderService,
 	}
 	var routes = common.Routes{
 
@@ -39,6 +48,6 @@ func main() {
 		},
 	}
 	router := common.NewRouter(routes)
-
+	log.Printf("Server started!")
 	log.Fatal(http.ListenAndServe(":5000", router))
 }

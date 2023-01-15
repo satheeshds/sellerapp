@@ -4,5 +4,6 @@ use (
 	./cmd/order_processor
 	./pkg/common
 	./pkg/models
+	./pkg/order_repository
 	./pkg/order_service
 )

@@ -7,6 +7,7 @@ import (
 	"strconv"
 
 	"github.com/gorilla/mux"
+	"github.com/satheeshds/sellerapp/pkg/models"
 	orderservice "github.com/satheeshds/sellerapp/pkg/order_service"
 )
 
@@ -20,8 +21,15 @@ func (o *orderapi) CancelOrder(w http.ResponseWriter, r *http.Request) {
 }
 
 func (o *orderapi) CreateOrder(w http.ResponseWriter, r *http.Request) {
+	var order models.Order
+	err := json.NewDecoder(r.Body).Decode(&order)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	o.orderService.CreateOrder(order)
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	w.WriteHeader(http.StatusOK)
+	w.WriteHeader(http.StatusCreated)
 }
 
 func (o *orderapi) GetOrder(w http.ResponseWriter, r *http.Request) {
