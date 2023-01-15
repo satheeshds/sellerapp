@@ -24,7 +24,9 @@ func (o *orderapi) CreateOrder(w http.ResponseWriter, r *http.Request) {
 	var order models.Order
 	err := json.NewDecoder(r.Body).Decode(&order)
 	if err != nil {
+		log.Printf("error : %v", err)
 		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(err.Error()))
 		return
 	}
 	o.orderService.CreateOrder(order)
