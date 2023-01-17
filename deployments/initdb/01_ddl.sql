@@ -38,13 +38,9 @@ CREATE TABLE "orders" (
   "transaction_id" int,
   "status" order_status,
   "created_at" timestamptz DEFAULT 'now()',
-  "total_amount" decimal
-);
-
-CREATE TABLE "order_items" (
-  "order_id" int,
+  "total_amount" decimal,
   "product_id" int,
-  "quantity" int DEFAULT 1
+  "product_quantity" int
 );
 
 CREATE TABLE "products" (

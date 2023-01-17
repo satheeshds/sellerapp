@@ -78,6 +78,12 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Product'
+      responses:
+        201:
+          description: Created
+        400:
+          description: BadRequest
+
 
   /inventory/{id}:
     get:
@@ -200,6 +206,12 @@ components:
         created_at:
           type: string
           format: date-time
+        product_id:
+          type: integer
+          minimum: 1
+        product_quantity:
+          type: integer
+          minimum: 1
 
     Product:
       type: object
