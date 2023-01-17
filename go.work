@@ -9,4 +9,6 @@ use (
 	./pkg/models
 	./pkg/order_repository
 	./pkg/order_service
+	./pkg/payment_repository
+	./pkg/payment_service
 )

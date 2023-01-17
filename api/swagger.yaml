@@ -140,14 +140,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PaymentRequest'
+              $ref: '#/components/schemas/Payment'
       responses:
         201:
           description: Created
           content:
             application/json:
               schema: 
-                $ref: '#/components/schemas/PaymentResponse'
+                $ref: '#/components/schemas/Payment'
         400:
           description: Bad Request
 
@@ -166,19 +166,19 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PaymentRefund'
+              $ref: '#/components/schemas/Payment'
 
       responses:
-        204:
-          description: NoContent
-        404:
-          description: NotFound
-        409:
-          description: Conflict
+        200:
+          description: Ok
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorMessage'
+                $ref: '#/components/schemas/Payment'
+        400:
+          description: BadRequest
+        404:
+          description: NotFound
 
 components:
   schemas:
@@ -187,15 +187,16 @@ components:
       properties:
         id:
           type: integer
-          minimum: 1
+          readOnly: true
         user_id:
           type: integer
           minimum: 1
         transaction_id:
           type: integer
-          minimum: 1
+          readOnly: true
         status:
           type: string
+          readOnly: true
           enum:
             - created
             - cancelled
@@ -218,7 +219,7 @@ components:
       properties:
         id:
           type: integer
-          minimum: 1
+          readOnly: true
         name:
           type: string
         price:
@@ -226,6 +227,7 @@ components:
           minimum: 0
         status:
           type: string
+          readOnly: true
           enum:
             - out_of_stock
             - in_stock
@@ -243,28 +245,31 @@ components:
         message:
           type: string
     
-    PaymentRequest:
+    Payment:
       type: object
       properties:
-        orderId: 
+        id:
           type: integer
-        totalAmount:
+          readOnly: true
+        total_amount:
           type: number
-    
-    PaymentResponse:
-      type: object
-      properties:
-        paymentId:
-          type: integer
-    
-    PaymentRefund:
-      type: object
-      properties:
-        orderId:
-          type: integer
-        totalAmount:
-          type: number  
-  
+        payment_method:
+          type: string
+          enum:
+            - cash
+            - credit_card
+            - debit_card
+        status:
+          type: string
+          readOnly: true
+          enum:
+            - successful
+            - rejected
+            - refunded
+        created_at:
+          type: string
+          format: date-time
+
     OrderState:
       type: object
       properties:
