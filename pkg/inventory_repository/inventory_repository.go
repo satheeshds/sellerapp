@@ -1,6 +1,7 @@
 package inventoryrepository
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/jinzhu/gorm"
@@ -24,9 +25,18 @@ func (i *InventoryRepository) Read(id int) (models.Inventory, error) {
 }
 
 func (i *InventoryRepository) Update(inventory models.Inventory) error {
-	result := i.db.Table("products").Model(&inventory).Update(inventory)
+	result := i.db.Table("products").Model(&inventory).
+		Update("quantity", gorm.Expr("quantity - ?", inventory.Quantity))
 
-	return result.Error
+	if result.Error != nil {
+		return result.Error
+	}
+
+	if result.RowsAffected == 0 {
+		return fmt.Errorf("product doesn't exist")
+	}
+
+	return nil
 }
 
 func (i *InventoryRepository) Open() error {

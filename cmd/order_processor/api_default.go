@@ -34,8 +34,16 @@ func (o *orderapi) CreateOrder(w http.ResponseWriter, r *http.Request) {
 	err = json.Unmarshal(body, &order)
 	if err != nil {
 		log.Fatalf("unmarshal -- %#v", err)
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(err.Error()))
+		return
 	}
-	o.orderService.CreateOrder(order)
+	err = o.orderService.CreateOrder(order)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(err.Error()))
+		return
+	}
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusCreated)
 }

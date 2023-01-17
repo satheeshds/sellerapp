@@ -1,8 +1,6 @@
 package orderservice
 
 import (
-	"fmt"
-
 	apiclients "github.com/satheeshds/sellerapp/pkg/api_clients"
 	"github.com/satheeshds/sellerapp/pkg/models"
 	orderrepository "github.com/satheeshds/sellerapp/pkg/order_repository"
@@ -18,11 +16,11 @@ func (o *OrderService) GetOrder(id int) (models.Order, error) {
 }
 
 func (o *OrderService) CreateOrder(order models.Order) error {
-	if !o.InventoryClient.BlockProduct(order.Product_id, order.Product_quantity) {
-		return fmt.Errorf("requested quantity of product is not available")
+	if err := o.InventoryClient.BlockProduct(order.Product_id, order.Product_quantity); err != nil {
+		return err
 	}
-	err := o.Repository.Create(order)
-	if err != nil {
+
+	if err := o.Repository.Create(order); err != nil {
 		o.InventoryClient.UnblockProduct(order.Product_id, order.Product_quantity)
 		return err
 	}
