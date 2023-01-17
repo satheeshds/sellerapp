@@ -44,7 +44,7 @@ func main() {
 			HandlerFunc: api.BlockInventory,
 		},
 		common.Route{
-			Name:        "GetOrder",
+			Name:        "GetProduct",
 			Method:      strings.ToUpper("Get"),
 			Pattern:     "/v1/inventory/{id}",
 			HandlerFunc: api.GetInventory,

@@ -3,11 +3,16 @@ module github.com/satheeshds/sellerapp/cmd/order_processor
 go 1.18
 
 require (
+	github.com/satheeshds/sellerapp/pkg/api_clients v0.0.0
 	github.com/satheeshds/sellerapp/pkg/common v0.0.0
 	github.com/satheeshds/sellerapp/pkg/models v0.0.0
 	github.com/satheeshds/sellerapp/pkg/order_repository v0.0.0
-	github.com/satheeshds/sellerapp/pkg/order_service v0.0.0 
-	github.com/satheeshds/sellerapp/pkg/api_clients v0.0.0
+	github.com/satheeshds/sellerapp/pkg/order_service v0.0.0
+)
+
+require (
+	github.com/go-resty/resty/v2 v2.7.0 // indirect
+	golang.org/x/net v0.0.0-20211029224645-99673261e6eb // indirect
 )
 
 require (
@@ -24,4 +29,5 @@ replace github.com/satheeshds/sellerapp/pkg/models v0.0.0 => ../../pkg/models
 replace github.com/satheeshds/sellerapp/pkg/order_repository v0.0.0 => ../../pkg/order_repository
 
 replace github.com/satheeshds/sellerapp/pkg/order_service v0.0.0 => ../../pkg/order_service
+
 replace github.com/satheeshds/sellerapp/pkg/api_clients v0.0.0 => ../../pkg/api_clients

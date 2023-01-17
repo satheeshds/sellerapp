@@ -23,6 +23,15 @@ services:
     depends_on:
       db:
         condition: service_healthy
+  payment_processor:
+    build: 
+      context: ../.
+      dockerfile: ./build/package/payment_processor/Dockerfile
+    ports:
+      - "5002:5002"
+    depends_on:
+      db:
+        condition: service_healthy
 
   order_processor:
     build: 

@@ -152,6 +152,24 @@ paths:
           description: Bad Request
 
   /payment/{id}:
+    get:
+      summary: get the payment info
+      operationId: readPayment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer 
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+        404:
+          description: NotFound
     patch:
       summary: refunds the cancelled orders
       operationId: refund
