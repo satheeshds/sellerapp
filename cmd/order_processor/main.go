@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"strings"
 
+	apiclients "github.com/satheeshds/sellerapp/pkg/api_clients"
 	"github.com/satheeshds/sellerapp/pkg/common"
 	orderrepository "github.com/satheeshds/sellerapp/pkg/order_repository"
 	orderservice "github.com/satheeshds/sellerapp/pkg/order_service"
@@ -22,7 +23,8 @@ func main() {
 	defer orderRepository.Close()
 
 	orderService := orderservice.OrderService{
-		Repository: orderRepository,
+		Repository:      orderRepository,
+		InventoryClient: &apiclients.InventoryClient{},
 	}
 
 	orderapi := &orderapi{
