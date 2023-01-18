@@ -1,9 +1,9 @@
-clean:
-	docker container prune
+clean-build:
 	docker image prune
+	docker container prune 
 	docker compose -f ./deployments/docker-compose.yml build --no-cache
 
-deploy: clean
+deploy: clean-build
 	docker compose -f ./deployments/docker-compose.yml up -d
 
 logs: db-logs op-logs im-logs pp-logs 

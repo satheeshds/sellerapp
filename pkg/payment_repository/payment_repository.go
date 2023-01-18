@@ -22,6 +22,7 @@ func (p *PaymentRepository) Open() error {
 		log.Fatal(err)
 	}
 
+	p.db.LogMode(true)
 	return err
 }
 
@@ -43,7 +44,7 @@ func (p *PaymentRepository) Read(id int) (models.Payment, error) {
 }
 
 func (p *PaymentRepository) Update(payment *models.Payment) error {
-	result := p.db.Update(payment)
+	result := p.db.Model(payment).Update(payment)
 
 	return result.Error
 }

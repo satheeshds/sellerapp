@@ -29,8 +29,8 @@ func (o *OrderRepository) Close() {
 	o.db.Close()
 }
 
-func (o *OrderRepository) Create(order models.Order) error {
-	result := o.db.Create(&order)
+func (o *OrderRepository) Create(order *models.Order) error {
+	result := o.db.Create(order)
 
 	return result.Error
 }
