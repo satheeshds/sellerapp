@@ -11,6 +11,11 @@ import (
 	orderservice "github.com/satheeshds/sellerapp/pkg/order_service"
 )
 
+// This code is a main function for a server application.
+// It starts by printing a log message to indicate that the server is starting.
+// Then it creates an OrderRepository object and attempts to open a database connection using the Open() method.
+// If it fails, it logs an error message and exits. Otherwise, it creates an OrderService object and an OrderAPI object, which contains routes for creating, canceling, and getting orders.
+// Finally, it creates a router with the routes defined in the OrderAPI object and starts listening on port 5000 for incoming requests.
 func main() {
 
 	log.Printf("Server starting!")
