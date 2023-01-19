@@ -7,4 +7,7 @@ require (
 	github.com/satheeshds/sellerapp/pkg/models v0.0.0-20230117154428-d6252389a3f1
 )
 
-require github.com/jinzhu/inflection v1.0.0 // indirect
+require (
+	github.com/jinzhu/inflection v1.0.0 // indirect
+	github.com/lib/pq v1.1.1 // indirect
+)
