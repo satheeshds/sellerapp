@@ -1,12 +1,8 @@
 package main
 
 import (
-	"encoding/json"
-	"io/ioutil"
 	"net/http"
-	"strconv"
 
-	"github.com/gorilla/mux"
 	"github.com/satheeshds/sellerapp/pkg/common"
 	inventoryservice "github.com/satheeshds/sellerapp/pkg/inventory_service"
 	"github.com/satheeshds/sellerapp/pkg/models"
@@ -24,12 +20,13 @@ type inventoryapi struct {
 // Otherwise, it calls the BlockInventory() function from the inventoryService and if there is an error, it writes an error response with a status code of 400 (Bad Request).
 // If there are no errors, it writes a success response with a status code of 200 (OK) and returns the 'inventory' variable.
 func (i *inventoryapi) BlockInventory(w http.ResponseWriter, r *http.Request) {
-	inventory, err := readBody(r)
-	if err != nil {
+	var inventory = &models.Inventory{}
+	if err := common.ReadBody(r, inventory); err != nil {
 		common.WriteErrorResponse(w, http.StatusBadRequest, err)
 		return
 	}
-	if err = i.inventoryService.BlockInventory(inventory); err != nil {
+
+	if err := i.inventoryService.BlockInventory(inventory); err != nil {
 		common.WriteErrorResponse(w, http.StatusBadRequest, err)
 	} else {
 		common.WriteSuccessResponse(w, http.StatusOK, inventory)
@@ -40,7 +37,13 @@ func (i *inventoryapi) BlockInventory(w http.ResponseWriter, r *http.Request) {
 // If there is an error while reading the body, it will write an error response with a status code of 400 (Bad Request).
 // Otherwise, it will write a success response with a status code of 201 (Created) containing the inventory item.
 func (i *inventoryapi) CreateInventory(w http.ResponseWriter, r *http.Request) {
-	if inventory, err := readBody(r); err != nil {
+	var inventory = &models.Inventory{}
+	if err := common.ReadBody(r, inventory); err != nil {
+		common.WriteErrorResponse(w, http.StatusBadRequest, err)
+		return
+	}
+
+	if err := i.inventoryService.CreateInventory(inventory); err != nil {
 		common.WriteErrorResponse(w, http.StatusBadRequest, err)
 	} else {
 		common.WriteSuccessResponse(w, http.StatusCreated, inventory)
@@ -54,9 +57,7 @@ func (i *inventoryapi) CreateInventory(w http.ResponseWriter, r *http.Request) {
 // Otherwise, it will attempt to get the inventory item from the inventoryService using GetInventory and if there is an error,
 // it will write an error response with a status code of http.StatusNotFound, otherwise it will write a success response with a status code of http.StatusOK and pass in the result as a parameter.
 func (i *inventoryapi) GetInventory(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	id := vars["id"]
-	productId, err := strconv.Atoi(id)
+	productId, err := common.ReadIdFromRequest(r)
 	if err != nil {
 		common.WriteErrorResponse(w, http.StatusBadRequest, err)
 		return
@@ -67,15 +68,4 @@ func (i *inventoryapi) GetInventory(w http.ResponseWriter, r *http.Request) {
 	} else {
 		common.WriteSuccessResponse(w, http.StatusOK, result)
 	}
-}
-
-func readBody(r *http.Request) (models.Inventory, error) {
-	defer r.Body.Close()
-	var inventory models.Inventory
-	body, err := ioutil.ReadAll(r.Body)
-	if err == nil {
-		err = json.Unmarshal(body, &inventory)
-	}
-
-	return inventory, err
 }

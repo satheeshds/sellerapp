@@ -2,9 +2,7 @@ package main
 
 import (
 	"net/http"
-	"strconv"
 
-	"github.com/gorilla/mux"
 	"github.com/satheeshds/sellerapp/pkg/common"
 	"github.com/satheeshds/sellerapp/pkg/models"
 	paymentservice "github.com/satheeshds/sellerapp/pkg/payment_service"
@@ -21,7 +19,7 @@ type paymentapi struct {
 // If there is no error reading the body, it calls p.paymentService.UpdatePayment() to update the payment object with new information from the request body. If there is an error updating the payment, it writes an error response with a status code of 400 (Bad Request) and returns.
 // If there is no error updating the payment, it writes a success response with a status code of 200 (OK) and returns with the updated payment object as part of its response body.
 func (p *paymentapi) UpdatePayment(w http.ResponseWriter, r *http.Request) {
-	var payment *models.Payment
+	var payment = &models.Payment{}
 	if err := common.ReadBody(r, payment); err != nil {
 		common.WriteErrorResponse(w, http.StatusBadRequest, err)
 		return
@@ -41,7 +39,7 @@ func (p *paymentapi) UpdatePayment(w http.ResponseWriter, r *http.Request) {
 // If there are any errors, it will write an error response to the ResponseWriter with a status code of 500 (Internal Server Error).
 // Otherwise, it will write a success response to the ResponseWriter with a status code of 201 (Created) and the payment variable as data.
 func (p *paymentapi) CreatePayment(w http.ResponseWriter, r *http.Request) {
-	var payment *models.Payment
+	var payment = &models.Payment{}
 	if err := common.ReadBody(r, payment); err != nil {
 		common.WriteErrorResponse(w, http.StatusBadRequest, err)
 		return
@@ -60,9 +58,7 @@ func (p *paymentapi) CreatePayment(w http.ResponseWriter, r *http.Request) {
 // Otherwise, it calls p.paymentService.GetPayment() with the paymentid as a parameter and if there is an error, it writes a Not Found error response using common.WriteErrorResponse().
 // Otherwise, it writes a Success response containing the result of p.paymentService.GetPayment() using common.WriteSuccessResponse().
 func (p *paymentapi) GetPayment(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	id := vars["id"]
-	paymentid, err := strconv.Atoi(id)
+	paymentid, err := common.ReadIdFromRequest(r)
 	if err != nil {
 		common.WriteErrorResponse(w, http.StatusBadRequest, err)
 		return

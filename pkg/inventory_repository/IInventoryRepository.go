@@ -9,9 +9,9 @@ import "github.com/satheeshds/sellerapp/pkg/models"
 // The Open() method does not take any parameters and returns an error.
 // The Close() method does not take any parameters and does not return anything.
 type IInventoryRepository interface {
-	Create(models.Inventory) error
+	Create(*models.Inventory) error
 	Read(int) (models.Inventory, error)
-	Update(models.Inventory) error
+	Update(*models.Inventory) error
 	Open() error
 	Close()
 }

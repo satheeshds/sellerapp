@@ -13,14 +13,14 @@ type InventoryService struct {
 
 // This function is part of the InventoryService and is used to create an inventory item.
 // It takes in a parameter of type models.Inventory and returns an error. The function calls the Create() method of the Repository field of the InventoryService struct.
-func (i *InventoryService) CreateInventory(inventory models.Inventory) error {
+func (i *InventoryService) CreateInventory(inventory *models.Inventory) error {
 	return i.Repository.Create(inventory)
 }
 
 // This function is part of an InventoryService and is used to block inventory.
 // It takes a models.Inventory as an argument and returns an error.
 // The function calls the Update method on the Repository associated with the InventoryService to update the inventory.
-func (i *InventoryService) BlockInventory(inventory models.Inventory) error {
+func (i *InventoryService) BlockInventory(inventory *models.Inventory) error {
 	return i.Repository.Update(inventory)
 }
 

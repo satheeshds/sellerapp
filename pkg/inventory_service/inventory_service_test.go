@@ -28,7 +28,7 @@ func TestInventoryService_CreateInventory(t *testing.T) {
 			i := &InventoryService{
 				Repository: tt.fields.Repository,
 			}
-			if err := i.CreateInventory(tt.args.inventory); (err != nil) != tt.wantErr {
+			if err := i.CreateInventory(&tt.args.inventory); (err != nil) != tt.wantErr {
 				t.Errorf("InventoryService.CreateInventory() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
@@ -55,7 +55,7 @@ func TestInventoryService_BlockInventory(t *testing.T) {
 			i := &InventoryService{
 				Repository: tt.fields.Repository,
 			}
-			if err := i.BlockInventory(tt.args.inventory); (err != nil) != tt.wantErr {
+			if err := i.BlockInventory(&tt.args.inventory); (err != nil) != tt.wantErr {
 				t.Errorf("InventoryService.BlockInventory() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})

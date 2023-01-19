@@ -18,8 +18,8 @@ type InventoryRepository struct {
 // This function is part of the InventoryRepository struct and is used to create a new inventory item in the products table.
 // It takes in an inventory item of type models.Inventory as an argument and creates it in the database using the db object from the InventoryRepository struct.
 // The result of the creation is returned as an error.
-func (i *InventoryRepository) Create(inventory models.Inventory) error {
-	result := i.db.Table("products").Create(&inventory)
+func (i *InventoryRepository) Create(inventory *models.Inventory) error {
+	result := i.db.Table("products").Create(inventory)
 	return result.Error
 }
 
@@ -37,8 +37,8 @@ func (i *InventoryRepository) Read(id int) (models.Inventory, error) {
 // It takes in a models.Inventory object as a parameter and uses the gorm library to update the quantity in the "products" table.
 // If there is an error, it returns the error. If no rows are affected, it returns an error saying that the product doesn't exist.
 // Otherwise, it returns nil.
-func (i *InventoryRepository) Update(inventory models.Inventory) error {
-	result := i.db.Table("products").Model(&inventory).
+func (i *InventoryRepository) Update(inventory *models.Inventory) error {
+	result := i.db.Table("products").Model(inventory).
 		Update("quantity", gorm.Expr("quantity - ?", inventory.Quantity))
 
 	if result.Error != nil {

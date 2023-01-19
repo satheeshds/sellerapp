@@ -1,12 +1,8 @@
 package main
 
 import (
-	"encoding/json"
-	"io/ioutil"
 	"net/http"
-	"strconv"
 
-	"github.com/gorilla/mux"
 	"github.com/satheeshds/sellerapp/pkg/common"
 	"github.com/satheeshds/sellerapp/pkg/models"
 	orderservice "github.com/satheeshds/sellerapp/pkg/order_service"
@@ -24,10 +20,7 @@ type orderapi struct {
 // It then calls the CancelOrder() method from the orderService struct, passing in the orderid as a parameter.
 // If there is an error, it calls writeErrorResponse() with the appropriate status code and error message, otherwise it calls writeSuccessResponse() with the order object.
 func (o *orderapi) CancelOrder(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	id := vars["id"]
-
-	orderid, err := strconv.Atoi(id)
+	orderid, err := common.ReadIdFromRequest(r)
 	if err != nil {
 		common.WriteErrorResponse(w, http.StatusBadRequest, err)
 		return
@@ -49,19 +42,13 @@ func (o *orderapi) CancelOrder(w http.ResponseWriter, r *http.Request) {
 // If there is an error during this process, it again writes an error response to the ResponseWriter with a status code of 400 (Bad Request).
 // If no errors occur, it calls on the orderService to create an order using the order variable, and if successful, returns a success response with the order object included in it.
 func (o *orderapi) CreateOrder(w http.ResponseWriter, r *http.Request) {
-	defer r.Body.Close()
-	var order models.Order
-	body, err := ioutil.ReadAll(r.Body)
-	if err != nil {
+	var order = &models.Order{}
+	if err := common.ReadBody(r, order); err != nil {
 		common.WriteErrorResponse(w, http.StatusBadRequest, err)
 		return
 	}
 
-	if err = json.Unmarshal(body, &order); err != nil {
-		common.WriteErrorResponse(w, http.StatusBadRequest, err)
-		return
-	}
-	if err = o.orderService.CreateOrder(&order); err != nil {
+	if err := o.orderService.CreateOrder(order); err != nil {
 		common.WriteErrorResponse(w, http.StatusBadRequest, err)
 	} else {
 		common.WriteSuccessResponse(w, http.StatusCreated, order)
@@ -73,9 +60,7 @@ func (o *orderapi) CreateOrder(w http.ResponseWriter, r *http.Request) {
 // It then uses mux to get the ID from the request, converts it to an integer, and passes it to the GetOrder function of the orderService. If there is an error, it writes an error response with a status code of either 400 (Bad Request) or 404 (Not Found).
 // If there is no error, it writes a success response with the result.
 func (o *orderapi) GetOrder(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	id := vars["id"]
-	orderid, err := strconv.Atoi(id)
+	orderid, err := common.ReadIdFromRequest(r)
 	if err != nil {
 		common.WriteErrorResponse(w, http.StatusBadRequest, err)
 		return
