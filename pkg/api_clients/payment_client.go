@@ -9,6 +9,8 @@ import (
 
 type PaymentClient struct{}
 
+// This function captures a payment using the PaymentClient struct. It creates a new REST client and then sends a POST request to the payment processor with the payment information.
+// If the response is successful, it returns nil, otherwise it returns an error containing the response string.
 func (pc *PaymentClient) CapturePayment(payment *models.Payment) error {
 	client := resty.New()
 
@@ -28,6 +30,10 @@ func (pc *PaymentClient) CapturePayment(payment *models.Payment) error {
 	return fmt.Errorf(resp.String())
 }
 
+// This function is part of the PaymentClient struct and is used to refund a payment.
+// It takes in an integer paymentId as an argument.
+// It creates a new resty client and uses it to send a PATCH request to the payment processor with the status set to "refunded".
+// If the response is successful, it returns nil, otherwise it returns an error.
 func (pc *PaymentClient) RefundPayment(paymentId int) error {
 	client := resty.New()
 
