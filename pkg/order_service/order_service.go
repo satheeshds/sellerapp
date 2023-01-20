@@ -1,6 +1,8 @@
 package orderservice
 
 import (
+	"fmt"
+
 	apiclients "github.com/satheeshds/sellerapp/pkg/api_clients"
 	"github.com/satheeshds/sellerapp/pkg/models"
 	orderrepository "github.com/satheeshds/sellerapp/pkg/order_repository"
@@ -62,6 +64,9 @@ func (o *OrderService) CancelOrder(id int) (models.Order, error) {
 	order, err := o.Repository.Read(id)
 	if err != nil {
 		return order, err
+	}
+	if order.Status == "cancelled" {
+		return order, fmt.Errorf("order %d was already cancelled", id)
 	}
 	o.InventoryClient.UnblockProduct(order.Product_id, order.Product_quantity)
 	o.PaymentClient.RefundPayment(order.Transaction_id)

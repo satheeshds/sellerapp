@@ -36,7 +36,7 @@ func (p *PaymentRepository) Close() {
 // This function is a method of the PaymentRepository struct. It takes in a pointer to a models.Payment struct and creates a payment record in the database.
 // It returns an error if there is an issue with creating the record.
 func (p *PaymentRepository) Create(payment *models.Payment) error {
-	result := p.db.Create(payment)
+	result := p.db.Omit("status").Create(payment)
 
 	return result.Error
 }

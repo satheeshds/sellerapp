@@ -38,7 +38,7 @@ func (o *OrderRepository) Close() {
 // It takes a pointer to a models.Order as an argument and returns an error if one occurs.
 // The result of the database operation is stored in the variable "result" and its associated error is returned.
 func (o *OrderRepository) Create(order *models.Order) error {
-	result := o.db.Create(order)
+	result := o.db.Omit("status").Create(order)
 
 	return result.Error
 }
