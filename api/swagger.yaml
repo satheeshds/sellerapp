@@ -42,7 +42,7 @@ paths:
                 $ref: '#/components/schemas/Order'
         404:
           description: NotFound
-    patch:
+    delete:
       summary: cancels the specified order
       operationId: cancelOrder
       parameters:
@@ -51,15 +51,9 @@ paths:
           required: true
           schema:
             type: integer
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/OrderState'
       responses:
-        204:
-          description: NoContent
+        200:
+          description: Ok
         404:
           description: NotFound
         409:

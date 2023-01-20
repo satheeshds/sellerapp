@@ -39,7 +39,7 @@ func main() {
 
 		common.Route{
 			Name:        "CancelOrder",
-			Method:      strings.ToUpper("Patch"),
+			Method:      strings.ToUpper("Delete"),
 			Pattern:     "/v1/order/{id}",
 			HandlerFunc: orderapi.CancelOrder,
 		},

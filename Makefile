@@ -1,6 +1,4 @@
 clean-build:
-	docker image prune
-	docker container prune 
 	docker compose -f ./deployments/docker-compose.yml build --no-cache
 
 deploy: clean-build
